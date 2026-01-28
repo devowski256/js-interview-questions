@@ -5,11 +5,11 @@ class PriorityQueue {
     return this.items.length;
   }
 
-  enqueue(item) {
-    this.items.push(item);
+  insert(value, cost) {
+    this.items.push({ value, cost });
   }
 
-  dequeue() {
+  delete() {
     const minIndex = this.items.reduce(
       (min, item, i) => (item.cost < this.items[min].cost ? i : min),
       0,
@@ -20,27 +20,27 @@ class PriorityQueue {
 }
 
 class Scheduler {
-  constructor(maxCapacity = 1) {
+  constructor(maxConcurrency = 1) {
     this.queue = new PriorityQueue();
-    this.capacity = maxCapacity;
+    this.availableSlots = maxConcurrency;
   }
 
   schedule(task, expectedDuration) {
-    this.queue.enqueue({ value: task, cost: expectedDuration });
+    this.queue.insert(task, expectedDuration);
 
-    queueMicrotask(() => this.tryStartNextTask());
+    queueMicrotask(() => this.runNextTask());
   }
 
-  tryStartNextTask() {
-    if (this.capacity === 0) return;
+  runNextTask() {
+    if (this.availableSlots === 0) return;
     if (this.queue.size() === 0) return;
 
-    this.capacity--;
+    this.availableSlots--;
 
-    const task = this.queue.dequeue();
+    const task = this.queue.delete();
     task().finally(() => {
-      this.capacity++;
-      this.tryStartNextTask();
+      this.availableSlots++;
+      this.runNextTask();
     });
   }
 }
