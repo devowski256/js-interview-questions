@@ -7,14 +7,18 @@ function getSchema(json, indent = 0) {
     return `${elementSchema}[]`;
   }
 
-  if (typeof json === 'object' && json !== null) {
+  if (json === null) {
+    return 'null';
+  }
+
+  if (typeof json === 'object') {
     const prefix = ' '.repeat(indent * 2);
 
-    const body = Object.keys(json)
-      .map((field) => {
-        const fieldSchema = getSchema(json[field], indent + 1);
+    const body = Object.entries(json)
+      .map(([key, value]) => {
+        const fieldSchema = getSchema(value, indent + 1);
 
-        return `  ${prefix}${field}: ${fieldSchema}`;
+        return `  ${prefix}${key}: ${fieldSchema}`;
       })
       .join('\n');
 

@@ -26,7 +26,7 @@ console.log(getSchema(data));
 Expected output:
 {
   query: string
-  origin: object
+  origin: null
   data: {
     count: number
     items: {
