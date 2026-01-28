@@ -20,32 +20,6 @@ const data = {
   },
 };
 
-function getSchema(json, indent = 0) {
-  if (Array.isArray(json)) {
-    if (json.length === 0) return '[]';
-
-    const elementSchema = getSchema(json[0], indent);
-
-    return `${elementSchema}[]`;
-  }
-
-  if (typeof json === 'object' && json !== null) {
-    const prefix = ' '.repeat(indent * 2);
-
-    const body = Object.keys(json)
-      .map((field) => {
-        const fieldSchema = getSchema(json[field], indent + 1);
-
-        return `  ${prefix}${field}: ${fieldSchema}`;
-      })
-      .join('\n');
-
-    return `{\n${body}\n${prefix}}`;
-  }
-
-  return String(typeof json);
-}
-
 console.log(getSchema(data));
 
 /*

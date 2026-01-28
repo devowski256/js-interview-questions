@@ -19,32 +19,7 @@ const users = [
   },
 ];
 
-function extractEntities(data, name, ...childrenNames) {
-  const result = { [name]: {} };
-
-  for (const childName of childrenNames) {
-    result[childName] = {};
-  }
-
-  for (const item of data) {
-    result[name][item.id] = Object.fromEntries(
-      Object.entries(item).filter(([key]) => !childrenNames.includes(key)),
-    );
-
-    for (const childName of childrenNames) {
-      for (const child of item[childName]) {
-        result[childName][child.id] = {
-          ...child,
-          [`${name}Id`]: item.id,
-        };
-      }
-    }
-  }
-
-  return result;
-}
-
-console.log(extractEntities(users, 'users', 'posts', 'comments'));
+console.log(normalize(users, 'users', 'posts', 'comments'));
 
 /*
 Expected output:
