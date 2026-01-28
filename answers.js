@@ -1,3 +1,4 @@
+/* Task 1 */
 function getSchema(json, indent = 0) {
   if (Array.isArray(json)) {
     if (json.length === 0) return '[]';
@@ -7,9 +8,7 @@ function getSchema(json, indent = 0) {
     return `${elementSchema}[]`;
   }
 
-  if (json === null) {
-    return 'null';
-  }
+  if (json === null) return 'null';
 
   if (typeof json === 'object') {
     const prefix = ' '.repeat(indent * 2);
@@ -28,6 +27,7 @@ function getSchema(json, indent = 0) {
   return String(typeof json);
 }
 
+/* Task 2 */
 function normalize(data, name, ...childrenNames) {
   const result = { [name]: {} };
 
@@ -53,6 +53,7 @@ function normalize(data, name, ...childrenNames) {
   return result;
 }
 
+/* Task 3 */
 class PriorityQueue {
   items = [];
 
