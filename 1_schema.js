@@ -4,16 +4,8 @@ const data = {
   data: {
     count: 17,
     items: [
-      {
-        id: 1,
-        name: 'Alice',
-        isActive: true,
-      },
-      {
-        id: 2,
-        name: 'Bob',
-        isActive: false,
-      },
+      { id: 1, name: 'Alice', isActive: true },
+      { id: 2, name: 'Bob', isActive: false },
     ],
     meta: [['ENTITY', 'USER'], []],
     related: [],
